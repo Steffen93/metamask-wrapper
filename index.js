@@ -5,11 +5,15 @@ module.exports = createMetamaskWrapper;
 function createMetamaskWrapper(options) {
     options = options || {}
 
+    // variables
+
     const ACCOUNT_UPDATE_INTERVAL = options.updateInterval || 1000
 
     var accountUpdated = options.onAccountUpdate
 
     var accountUpdateIntervalID = -1
+
+    // "public" functions
 
     var stopAccountUpdateListener = function(){
         if(accountUpdateIntervalID >= 0){
@@ -26,11 +30,11 @@ function createMetamaskWrapper(options) {
         },ACCOUNT_UPDATE_INTERVAL)
     }
 
-
-
     return {
         stopAccountUpdateListener: stopAccountUpdateListener
     }
+
+    // "private" functions
 
     function updateAccount(){
         if(isFunction(accountUpdated)){
@@ -38,7 +42,7 @@ function createMetamaskWrapper(options) {
         }
     }
 
-    var isFunction = function(func) {
+    function isFunction(func) {
         return typeof func === 'function'
     }
 }
